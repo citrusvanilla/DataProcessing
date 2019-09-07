@@ -2,7 +2,6 @@
 Module for processing data for the Overview mode of Goblin Monitor.
 """
 
-import typing
 import math
 
 #######################################################################
@@ -153,6 +152,28 @@ def get_resolvers(data: dict) -> dict:
   # Write to times and aveSpeeds for those times.
   p_dic['times'] = [i[0] for i in sorted_bins]
   p_dic['aveSpeed'] = [i[1] for i in sorted_bins]
+
+  # Return processed data.
+  return p_dic
+
+
+def get_overview_data(data: dict) -> dict:
+  """
+  Process data for overview component.
+
+  Args:
+    data: input data as a dictionary.
+
+  Returns:
+    p_dic: processed data as a dictionary.
+  """
+  # Init processed data dictionary.
+  p_dic: dict = {
+    'summary': overview.get_summary(data),
+    'requests': overview.get_requests(data),
+    'response': overview.get_responses(data),
+    'resolvers': overview.get_resolvers(data)
+  }
 
   # Return processed data.
   return p_dic
