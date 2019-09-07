@@ -2,8 +2,6 @@
 Module for processing data for the Resolvers mode of Goblin Monitor.
 """
 
-import typing
-
 #######################################################################
 
 def get_invocationcounts(data: dict) -> dict:
@@ -63,5 +61,34 @@ def get_aveexecutiontimes(data: dict) -> dict:
       )
   
   # Return processed data object.
+  return p_dic
+
+
+def get_resolvers_data(data: dict) -> dict:
+  """
+  Processes data for resolvers mode.
+
+  Args:
+    data: a dictionary of data for processing.
+
+  Returns:
+    p_dic: a dictionary of component-level data.
+  """
+
+  # Init processed data dictionary.
+  p_dic: dict = {
+    "invocationCounts": get_invocationcounts(data),
+    "executionTimes": get_aveexecutiontimes(data),
+  }
+
+  # Stick some averages data on p_dic.
+  total_count = sum([p_dic['invocationCounts'][x]
+                     for x in p_dic['invocationCounts']])
+  sum_ave = \
+    sum([p_dic['executionTimes'][x] * p_dic['invocationCounts'][x]
+         for x in p_dic['invocationCounts']])
+  p_dic['averageTime'] = sum_ave / total_count
+
+  # Return the processed data.
   return p_dic
 
