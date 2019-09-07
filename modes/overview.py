@@ -169,10 +169,10 @@ def get_overview_data(data: dict) -> dict:
   """
   # Init processed data dictionary.
   p_dic: dict = {
-    'summary': overview.get_summary(data),
-    'requests': overview.get_requests(data),
-    'response': overview.get_responses(data),
-    'resolvers': overview.get_resolvers(data)
+    'summary': get_summary(data),
+    'requests': get_requests(data),
+    'response': get_responses(data),
+    'resolvers': get_resolvers(data)
   }
 
   # Return processed data.
