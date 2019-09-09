@@ -20,6 +20,7 @@ def get_summary(data: dict) -> dict:
   p_dic: dict = {
     'numTotalRequests': 0
   }
+  print(data)
 
   # Iterate through the API entrypoints.
   for entrypoint in data['Query']:
@@ -90,13 +91,13 @@ def get_responses(data: dict) -> dict:
       t_buf['counts'][bin] = t_buf['counts'][bin] + 1 \
                              if bin in t_buf['counts'] else 1
       t_buf['speed'][bin] = (
-        ((t_buf['counts'][bin]-1) * (t_buf['speed'][bin]) + req['speed']) /
+        ((t_buf['counts'][bin]-1) * (t_buf['speed'][bin]) + float(req['speed'])) /
         t_buf['counts'][bin]
-        if bin in t_buf['speed'] else req['speed']
+        if bin in t_buf['speed'] else float(req['speed'])
       )
 
       p_dic['count'] = p_dic['count'] + 1
-      p_dic['ave'] = (p_dic['ave'] * (p_dic['count']-1) + req['speed']) \
+      p_dic['ave'] = (p_dic['ave'] * (p_dic['count']-1) + float(req['speed'])) \
                       / p_dic['count']
 
   # Sort the tmp buffer by times.
@@ -140,9 +141,9 @@ def get_resolvers(data: dict) -> dict:
         t_buf['counts'][bin] = t_buf['counts'][bin] + 1 \
                                if bin in t_buf['counts'] else 1
         t_buf['speed'][bin] = (
-          ((t_buf['counts'][bin]-1) * (t_buf['speed'][bin]) + req['speed']) /
+          ((t_buf['counts'][bin]-1) * (t_buf['speed'][bin]) + float(req['speed'])) /
           t_buf['counts'][bin]
-          if bin in t_buf['speed'] else req['speed']
+          if bin in t_buf['speed'] else float(req['speed'])
         )
 
   # Sort the tmp buffer by times.
