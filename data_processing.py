@@ -1,7 +1,34 @@
 import boto3
+from boto3.dynamodb.types import TypeDeserializer
 
-from modes import overview
-from modes import resolvers
+from overview import *
+from resolvers import *
+
+
+def deserialize(data):
+  """
+  Helper function to parse the DynamoDB serialization.
+  
+  Args:
+    data: DynamoDB unmarshalled data.
+  
+  Returns:
+    {}: unmarshalled python dict
+  """
+  serializer = TypeDeserializer()
+
+  # Check for list type.
+  if isinstance(data, list):
+    return [deserialize(v) for v in data]
+
+  # Check for object type.
+  if isinstance(data, dict):
+    try: 
+      return serializer.deserialize(data)
+    except TypeError:
+      return { k : deserialize(v) for k, v in data.items() }
+  else:
+    return data
 
 
 def lambda_handler(event: dict, context: dict) -> dict:
@@ -22,6 +49,10 @@ def lambda_handler(event: dict, context: dict) -> dict:
   # Make a connection to dynamodb service with boto3.
   client = boto3.client('dynamodb')
 
+  # To go from low-level format to python
+  boto3.resource('dynamodb')
+  deserializer = boto3.dynamodb.types.TypeDeserializer()
+
   # getItem api call, pass in params
   response = client.get_item(
     TableName = "UserData",
@@ -33,12 +64,12 @@ def lambda_handler(event: dict, context: dict) -> dict:
   )
 
   # Extract data from the response.
-  data = response
+  data = deserialize(response['Item']['Data'])
 
   # Process data.
   processedData: dict = {
-    'overview': overview.get_overview_data(data),
-    'resolvers': resolvers.get_resolvers_data(data)
+    'overview': get_overview_data(data),
+    'resolvers': get_resolvers_data(data)
   }
   
   # Return
