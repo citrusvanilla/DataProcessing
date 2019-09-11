@@ -87,7 +87,7 @@ def get_resolvers_data(data: dict) -> dict:
   sum_ave = \
     sum([p_dic['executionTimes'][x] * p_dic['invocationCounts'][x]
          for x in p_dic['invocationCounts']])
-  p_dic['averageTime'] = sum_ave / total_count
+  p_dic['averageTime'] = sum_ave / total_count if total_count > 0 else 0.0
 
   # Return the processed data.
   return p_dic
