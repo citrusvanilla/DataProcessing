@@ -53,12 +53,13 @@ def lambda_handler(event: dict, context: dict) -> dict:
   boto3.resource('dynamodb')
   deserializer = boto3.dynamodb.types.TypeDeserializer()
 
+  print(event)
   # getItem api call, pass in params
   response = client.get_item(
-    TableName = "UserData",
+    TableName = "GraphQLData",
     Key = {
-      'UserID': {
-          'S': event['UserID']
+      'AccessID': {
+          'S': event['AccessID']
       }
     }
   )
