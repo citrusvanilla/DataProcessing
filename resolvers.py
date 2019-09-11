@@ -21,8 +21,9 @@ def get_invocationcounts(data: dict) -> dict:
 
   # Iterate through the custom type arrays.
   for custom_type in data:
-    # Pass over Query.
-    if custom_type == "Query": continue
+    # REMOVED: 9.11.19 we are going to count query resolvers.
+    # if custom_type == "Query": continue
+
     # Iterate over the custom type resolvers.
     for resolver in data[custom_type]:
       # Stick the custom type + resolver in the output dict with count.
@@ -49,8 +50,8 @@ def get_aveexecutiontimes(data: dict) -> dict:
 
   # Iterate through custom types.
   for custom_type in data:
-    # If custom type is 'query', continue.
-    if custom_type == "Query": continue
+    # # If custom type is 'query', continue.
+    # if custom_type == "Query": continue
 
     # Iterate through resolvers.
     for resolver in data[custom_type]:
