@@ -82,7 +82,9 @@ def get_responses(data: dict) -> dict:
   # Init output dict.
   p_dic: dict = {
     'ave': 0.0,
-    'count': 0
+    'count': 0,
+    'times': [],
+    '90': []
   }
 
   # Init a temp buffer.
@@ -136,7 +138,10 @@ def get_resolvers(data: dict) -> dict:
   """
 
   # Init processed data dict.
-  p_dic: dict = {}
+  p_dic: dict = {
+    'times': [],
+    'aveSpeed': []
+  }
 
   # Init a temp buffer dic.
   t_buf: dict = {

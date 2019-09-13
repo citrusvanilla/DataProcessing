@@ -80,6 +80,7 @@ def get_resolvers_data(data: dict) -> dict:
   p_dic: dict = {
     "invocationCounts": get_invocationcounts(data),
     "executionTimes": get_aveexecutiontimes(data),
+    "averageTime": 0.0
   }
 
   # Stick some averages data on p_dic.
